@@ -7,7 +7,8 @@ import axios from "axios";
 const Login = ()=>{
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const navigate = useNavigate()    
+    const navigate = useNavigate() 
+   
 
     const SendLoginData = (e) =>{
       e.preventDefault()
@@ -17,7 +18,8 @@ const Login = ()=>{
       else{
         axios.post('https://kserver.okelamedia.com/api/login', {email, password}).then(response =>{
           if(response.data.success){
-            sessionStorage.setItem("UserData",JSON.stringify(response.data.msg))
+            sessionStorage.setItem("UserData",JSON.stringify(response.data.msg));
+            alert("Login Successful!")
             navigate("/dashboard")
           }
           else{
@@ -34,7 +36,7 @@ const Login = ()=>{
           <img className='logo' src='/images/ksustify.png' alt='logo' />
       </Row>
       <hr className='hr' />
-      <Form onSubmit={SendLoginData}>
+      <Form onSubmit={SendLoginData} method="post">
         <Row>
           <Label htmlFor="email">User Email</Label>
           <Input type="email" id="email" placeholder="user@exmple.com"  onChange={e=>setEmail(e.target.value)} />
@@ -96,11 +98,11 @@ const Input = styled.input`
   border-radius: 5px;
 `;
 
-const Error = styled.div`
-  margin-top: 10px;
-  font-size: 20px;
-  color: #e85a71;
-`;
+// const Error = styled.div`
+//   margin-top: 10px;
+//   font-size: 20px;
+//   color: #e85a71;
+// `;
 
 const JoinButton = styled.button`
   margin-top: 2%;
@@ -123,8 +125,8 @@ const JoinButton = styled.button`
   }
 `;
 
-const ErrorText = styled.label`
-  color:red;
-`
+// const ErrorText = styled.label`
+//   color:red;
+// `
 
 export default Login

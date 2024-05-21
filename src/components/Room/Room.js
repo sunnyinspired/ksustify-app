@@ -27,7 +27,7 @@ const Room = (props) => {
   const navigate = useNavigate()
   
   useEffect(() => {
-    //console.log("room ID: "+ roomId)
+    console.log("room ID: "+ roomId)
     axios.get(`https://kserver.okelamedia.com/api/verify-meeting/${roomId}`).then(res=>{
       if(res.data.success){
           setRoomValid(true)

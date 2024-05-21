@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { Particles } from "../particles";
 
 
@@ -8,16 +8,21 @@ function Dashboard(){
     const [meetingTitle, setMeetingTitle] = useState('')  
     const user = JSON.parse(sessionStorage.getItem("UserData"))
     const [meetings, setMeetings] = useState([])
-    const [meetingPrompt, setMeetingPrompt] = useState(null)
+    //const [meetingPrompt, setMeetingPrompt] = useState(null)
     const user_id = user.user_id
     const meetingLink = useRef(null)
-    useEffect(()=>{
+    const url = 'https://ksustify.netlify.app/room/';
+
+    const getMeetings = () =>{
         axios.get('https://kserver.okelamedia.com/api/get-meetings').then(res =>{
             if(res.data.success){
                 setMeetings(res.data.meetings)
             }
         })
-    }, [],[meetingPrompt])  
+    }
+    useEffect(()=>{
+        getMeetings();
+    }, [])  
     
     function copyLink(){
       meetingLink.current.select()
@@ -33,10 +38,10 @@ function Dashboard(){
         axios.post('https://kserver.okelamedia.com/api/new-meeting', {meetingTitle:meetingTitle, user_id:user_id}).then(res =>{
             if(res.data.success){
                 alert(res.data.msg)
-                setMeetingPrompt(Math.random()*10000)
+                getMeetings();
             }
             else{
-                alert("Failed to add Meeting")
+                alert("Failed to Create Meeting")
             }
         })
     }
@@ -77,6 +82,7 @@ function Dashboard(){
                                 <tr>
                                     <th>S/N</th>
                                     <th>Meeting Title</th>
+                                    <th>Meeting ID</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -88,8 +94,9 @@ function Dashboard(){
                                             <tr key={index}>
                                                 <td>{index + 1}.</td>
                                                 <td>{meeting.meeting_title}</td>
+                                                <td>{meeting.meeting_id}</td>
                                                 <td>
-                                                    <input type="hidden" ref={meetingLink} value={meeting.meeting_slug} />
+                                                    <input type="hidden" ref={meetingLink} value={url + meeting.meeting_id} />
                                                     <button className="copy-btn" onClick={copyLink}>Copy Link</button>
                                                 </td>
                                             </tr>
@@ -99,7 +106,7 @@ function Dashboard(){
                                     </tbody>:
                                     <tbody>
                                         <tr>
-                                            <td>No Meetings Added Yet</td>
+                                            <td colSpan={4}>No Meetings Added Yet</td>
                                         </tr>
                                     </tbody>
                                     
