@@ -34,5 +34,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://kserver.okelamedia.com"
+  "proxy": "https://kserver.okelamedia.com",
+  "devDependencies": {
+    "@types/socket.io-client": "^3.0.0"
+  }
 }
