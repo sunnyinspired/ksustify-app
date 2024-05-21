@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useRef } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Particles } from "../particles";
@@ -120,12 +119,6 @@ const Input = styled.input`
   margin-top: 1%;
 `;
 
-const Error = styled.div`
-  margin-top: 10px;
-  font-size: 20px;
-  color: #e85a71;
-`;
-
 const JoinButton = styled.button`
   margin-top: 2%;
   height: 40px;
@@ -147,8 +140,6 @@ const JoinButton = styled.button`
   }
 `;
 
-const ErrorText = styled.label`
-  color:red;
-`
+
 
 export default Register

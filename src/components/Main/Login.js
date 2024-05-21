@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Particles } from "../particles";
@@ -7,6 +7,7 @@ import axios from "axios";
 const Login = ()=>{
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const navigate = useNavigate() 
    
 
@@ -19,8 +20,9 @@ const Login = ()=>{
         axios.post('https://kserver.okelamedia.com/api/login', {email, password}).then(response =>{
           if(response.data.success){
             sessionStorage.setItem("UserData",JSON.stringify(response.data.msg));
+            
             alert("Login Successful!")
-            navigate("/dashboard")
+            setIsLoggedIn(true)
           }
           else{
             alert(response.data.msg)
@@ -28,6 +30,14 @@ const Login = ()=>{
         })
       }
     }
+
+    useEffect(() => {
+      if (isLoggedIn) {
+        navigate("/dashboard");
+      }
+    }, [isLoggedIn]);
+
+
     return(
         <>
     <Particles />

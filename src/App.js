@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Room from './components/Room/Room'
 import styled from 'styled-components';
 import Login from './components/Main/Login';
@@ -13,7 +13,7 @@ function App() {
   const user = sessionStorage.getItem("user");
   const isLoggedIn = loggedin_user_data ? loggedin_user_data.loggedIn : null
   return (
-    <BrowserRouter>
+    <HashRouter>
       <AppContainer>
         <Routes>
           <Route path="/" element={<Login />} />
@@ -23,7 +23,7 @@ function App() {
           <Route path="/room/:roomId" element={user ? <Room /> : <InputName />} />
         </Routes>
       </AppContainer>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
